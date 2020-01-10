@@ -13,12 +13,19 @@ public class Main {
     float annualInterestRate = (float) readNumber("Annual Interest Rate (%): ", 1, 30);
     byte numberOfYears = (byte) readNumber("Period (Years): ", 1, 30);
 
+    printMortgage(principal, annualInterestRate, numberOfYears);
+    printPaymentSchedule(principal, annualInterestRate, numberOfYears);
+  }
+
+  private static void printMortgage(int principal, float annualInterestRate, byte numberOfYears) {
     double mortgage = calculateMortgage(principal, annualInterestRate, numberOfYears);
     System.out.println();
     System.out.println("MORTGAGE");
     System.out.println("--------");
     System.out.println("Monthly Payments: " + NumberFormat.getCurrencyInstance().format(mortgage));
+  }
 
+  private static void printPaymentSchedule(int principal, float annualInterestRate, byte numberOfYears) {
     System.out.println();
     System.out.println("PAYMENT SCHEDULE");
     System.out.println("----------------");
@@ -69,6 +76,7 @@ public class Main {
     float monthlyInterestRate = annualInterestRate / MONTHS_IN_YEAR / PERCENT;
     short numberOfPayments = (short) (numberOfYears * MONTHS_IN_YEAR);
 
+    // Formula source: https://www.mtgprofessor.com/formulas.htm
     double payment = principal *
         ((Math.pow((1 + monthlyInterestRate), numberOfPayments) - Math.pow((1 + monthlyInterestRate), numberOfPaymentsMade)) /
         (Math.pow((1 + monthlyInterestRate), numberOfPayments) -1));
